@@ -8,6 +8,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
@@ -27,6 +29,8 @@ import javax.persistence.Entity;
 @Table(name = "pelicula")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE pelicula SET eliminado = true WHERE pelicula_id = ?")
+@Where(clause = "eliminado = false")
 public class PeliculaEntidad {
     @Id
     @GeneratedValue(strategy = IDENTITY)
