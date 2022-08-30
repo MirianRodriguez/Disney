@@ -5,6 +5,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +24,8 @@ import javax.persistence.Entity;
 @Table(name = "genero")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE genero SET eliminado = true WHERE genero_id = ?")
+@Where(clause = "eliminado = false")
 public class GeneroEntidad {
     @Id
     @GeneratedValue(strategy = IDENTITY)

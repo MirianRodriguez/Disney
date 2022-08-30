@@ -21,4 +21,14 @@ public class PersonajeServicio {
         PersonajeDto dtoGeneroGuardado = personajeMapeo.entidad2Dto(entidadPersonajeGuardado);
         return dtoGeneroGuardado;
     }
+
+    public PersonajeDto buscarPorId(Long personajeId){
+        PersonajeEntidad personajeEntidad = personajeRepositorio.findById(personajeId).get();
+        PersonajeDto personajeDto = personajeMapeo.entidad2Dto(personajeEntidad);
+        return personajeDto;
+    }
+
+    public void eliminarPorId(Long personajeId){
+        personajeRepositorio.deleteById(personajeId);
+    }
 }
