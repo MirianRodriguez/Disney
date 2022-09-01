@@ -29,7 +29,7 @@ public class PersonajeControlador {
     }
 
     @GetMapping("/{personajeId}")
-    public ResponseEntity<PersonajeDto> detallePersonaje(@PathVariable Long personajeId){
+    public ResponseEntity<PersonajeDto> detallePersonaje(@PathVariable Long personajeId) throws Exception{
         PersonajeDto personaje = personajeServicio.buscarPorId(personajeId);
         return ResponseEntity.status(HttpStatus.OK).body(personaje);
     }
@@ -38,8 +38,7 @@ public class PersonajeControlador {
     public ResponseEntity<PersonajeDto> actualizar(
         @PathVariable Long personajeId, 
         @RequestBody PersonajeDto personajeDto) throws Exception{
-        PersonajeDto personajeActualizado = new PersonajeDto();
-        personajeActualizado = personajeServicio.actualizar(personajeId, personajeDto);
+        PersonajeDto personajeActualizado = personajeServicio.actualizar(personajeId, personajeDto);
         return ResponseEntity.ok().body(personajeActualizado);
     }
 
