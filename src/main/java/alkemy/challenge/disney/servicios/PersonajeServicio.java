@@ -22,8 +22,8 @@ public class PersonajeServicio {
     @Transactional
     public PersonajeDto guardar(PersonajeDto personajeDto){
         PersonajeEntidad entidadPersonajeGuardado = personajeRepositorio.save(personajeMapeo.dto2Entidad(personajeDto));
-        PersonajeDto dtoGeneroGuardado = personajeMapeo.entidad2Dto(entidadPersonajeGuardado);
-        return dtoGeneroGuardado;
+        PersonajeDto dtoPersonajeGuardado = personajeMapeo.entidad2Dto(entidadPersonajeGuardado);
+        return dtoPersonajeGuardado;
     }
 
     @Transactional
@@ -42,9 +42,12 @@ public class PersonajeServicio {
     }
 
     @Transactional(readOnly = true)
-    public PersonajeDto buscarPorId(Long personajeId){
-        PersonajeEntidad personajeEntidad = personajeRepositorio.findById(personajeId).get();
-        PersonajeDto personajeDto = personajeMapeo.entidad2Dto(personajeEntidad);
+    public PersonajeDto buscarPorId(Long personajeId) throws Exception{
+        Optional<PersonajeEntidad> personaje = personajeRepositorio.findById(personajeId);
+        if (!personaje.isPresent()){
+            throw new Exception("El id no es valido");
+        }
+        PersonajeDto personajeDto = personajeMapeo.entidad2Dto(personaje.get());
         return personajeDto;
     }
 
