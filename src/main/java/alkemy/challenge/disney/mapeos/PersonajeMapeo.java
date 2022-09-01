@@ -18,6 +18,15 @@ public class PersonajeMapeo {
         return personajeEntidad;
     }
 
+    public PersonajeEntidad dto2Entidad(PersonajeDto personajeDto, PersonajeEntidad personajeEntidad){
+        personajeEntidad.setNombre(personajeDto.getNombre());
+        personajeEntidad.setImagen(personajeDto.getImagen());
+        personajeEntidad.setEdad(personajeDto.getEdad());
+        personajeEntidad.setPeso(personajeDto.getPeso());
+        personajeEntidad.setHistoria(personajeDto.getHistoria());
+        return personajeEntidad;
+    }
+
     public PersonajeDto entidad2Dto(PersonajeEntidad personajeEntidad){
         PersonajeDto personajeDto = new PersonajeDto();
         personajeDto.setPersonajeId(personajeEntidad.getPersonajeId());
@@ -28,4 +37,5 @@ public class PersonajeMapeo {
         personajeDto.setHistoria(personajeEntidad.getHistoria());
         return personajeDto;
     }
+
 }
