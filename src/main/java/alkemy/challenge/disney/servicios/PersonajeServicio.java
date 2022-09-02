@@ -1,15 +1,20 @@
 package alkemy.challenge.disney.servicios;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import alkemy.challenge.disney.dto.FiltroPersonajeDto;
+import alkemy.challenge.disney.dto.PersonajeBasicoDto;
 import alkemy.challenge.disney.dto.PersonajeDto;
 import alkemy.challenge.disney.entidades.PersonajeEntidad;
 import alkemy.challenge.disney.mapeos.PersonajeMapeo;
 import alkemy.challenge.disney.repositorios.PersonajeRepositorio;
+import alkemy.challenge.disney.repositorios.especificaciones.PersonajeEspecificacion;
 
 @Service
 public class PersonajeServicio {
@@ -18,6 +23,8 @@ public class PersonajeServicio {
     private PersonajeRepositorio personajeRepositorio;
     @Autowired
     private PersonajeMapeo personajeMapeo;
+    @Autowired
+    private PersonajeEspecificacion especificacion;
 
     @Transactional
     public PersonajeDto guardar(PersonajeDto personajeDto){
@@ -58,5 +65,13 @@ public class PersonajeServicio {
             throw new Exception("El id no es valido");
         }
         personajeRepositorio.delete(personaje.get());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PersonajeBasicoDto> buscarPorFiltros(String nombre, Integer edad, Set<Long> peliculasId){
+        FiltroPersonajeDto filtroPersonajeDto = new FiltroPersonajeDto(nombre, edad, peliculasId);
+        List<PersonajeEntidad> entidadesPersonajes = personajeRepositorio.findAll(especificacion.buscarPorFiltros(filtroPersonajeDto));
+        List<PersonajeBasicoDto> dtoPersonajes = personajeMapeo.listaEntidades2listaDto(entidadesPersonajes);
+        return dtoPersonajes;
     }
 }
