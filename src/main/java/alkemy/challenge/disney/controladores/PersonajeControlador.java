@@ -1,5 +1,8 @@
 package alkemy.challenge.disney.controladores;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import alkemy.challenge.disney.dto.PersonajeBasicoDto;
 import alkemy.challenge.disney.dto.PersonajeDto;
 import alkemy.challenge.disney.servicios.PersonajeServicio;
 
@@ -37,7 +42,8 @@ public class PersonajeControlador {
     @PutMapping("/{personajeId}")
     public ResponseEntity<PersonajeDto> actualizar(
         @PathVariable Long personajeId, 
-        @RequestBody PersonajeDto personajeDto) throws Exception{
+        @RequestBody PersonajeDto personajeDto
+        ) throws Exception{
         PersonajeDto personajeActualizado = personajeServicio.actualizar(personajeId, personajeDto);
         return ResponseEntity.ok().body(personajeActualizado);
     }
@@ -46,6 +52,16 @@ public class PersonajeControlador {
     public ResponseEntity<Void> eliminarPersonaje(@PathVariable Long personajeId) throws Exception{
         personajeServicio.eliminarPorId(personajeId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PersonajeBasicoDto>> buscarPorFiltros(
+        @RequestParam(required = false) String nombre,
+        @RequestParam(required = false) Integer edad,
+        @RequestParam(required = false) Set<Long> peliculasId
+    ){
+        List<PersonajeBasicoDto> personajes = personajeServicio.buscarPorFiltros(nombre, edad, peliculasId);
+        return ResponseEntity.ok(personajes);
     }
 
 }

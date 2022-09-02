@@ -1,7 +1,11 @@
 package alkemy.challenge.disney.mapeos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import alkemy.challenge.disney.dto.PersonajeBasicoDto;
 import alkemy.challenge.disney.dto.PersonajeDto;
 import alkemy.challenge.disney.entidades.PersonajeEntidad;
 
@@ -36,6 +40,18 @@ public class PersonajeMapeo {
         personajeDto.setPeso(personajeEntidad.getPeso());
         personajeDto.setHistoria(personajeEntidad.getHistoria());
         return personajeDto;
+    }
+
+    public List<PersonajeBasicoDto>listaEntidades2listaDto(List<PersonajeEntidad> entidadesPersonajes){
+        List<PersonajeBasicoDto> dtoPersonajes = new ArrayList<>();
+        PersonajeBasicoDto personajeBasicoDto;
+        for (PersonajeEntidad personajeEntidad : entidadesPersonajes) {
+            personajeBasicoDto = new PersonajeBasicoDto();
+            personajeBasicoDto.setNombre(personajeEntidad.getNombre());
+            personajeBasicoDto.setImagen(personajeEntidad.getImagen());
+            dtoPersonajes.add(personajeBasicoDto);
+        }
+        return dtoPersonajes;
     }
 
 }
