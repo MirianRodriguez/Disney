@@ -27,7 +27,7 @@ public class PeliculaServicio {
     @Transactional
     public PeliculaDto guardar(PeliculaDto peliculaDto){
         PeliculaEntidad entidadPeliculaGuardada = peliculaRepositorio.save(peliculaMapeo.dto2Entidad(peliculaDto));
-        PeliculaDto dtoPeliculaGuardada = peliculaMapeo.entidad2Dto(entidadPeliculaGuardada);
+        PeliculaDto dtoPeliculaGuardada = peliculaMapeo.entidad2Dto(entidadPeliculaGuardada, true);
         return dtoPeliculaGuardada;
     }
 
@@ -42,7 +42,7 @@ public class PeliculaServicio {
         PeliculaEntidad peliculaActualizada = peliculaMapeo.dto2Entidad(peliculaDto, peliculaGuardada);
         peliculaActualizada = peliculaRepositorio.save(peliculaActualizada);
 
-        return peliculaMapeo.entidad2Dto(peliculaActualizada);
+        return peliculaMapeo.entidad2Dto(peliculaActualizada, true);
         
     }
 
@@ -52,7 +52,7 @@ public class PeliculaServicio {
         if (!pelicula.isPresent()){
             throw new Exception("El id no es valido");
         }
-        PeliculaDto peliculaDto = peliculaMapeo.entidad2Dto(pelicula.get());
+        PeliculaDto peliculaDto = peliculaMapeo.entidad2Dto(pelicula.get(), true);
         return peliculaDto;
     }
 

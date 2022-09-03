@@ -71,7 +71,7 @@ public class PersonajeServicio {
     public List<PersonajeBasicoDto> buscarPorFiltros(String nombre, Integer edad, Set<Long> peliculasId){
         FiltroPersonajeDto filtroPersonajeDto = new FiltroPersonajeDto(nombre, edad, peliculasId);
         List<PersonajeEntidad> entidadesPersonajes = personajeRepositorio.findAll(especificacion.buscarPorFiltros(filtroPersonajeDto));
-        List<PersonajeBasicoDto> dtoPersonajes = personajeMapeo.listaEntidades2listaDto(entidadesPersonajes);
+        List<PersonajeBasicoDto> dtoPersonajes = personajeMapeo.listaEntidades2listaDtoBasico(entidadesPersonajes);
         return dtoPersonajes;
     }
 }

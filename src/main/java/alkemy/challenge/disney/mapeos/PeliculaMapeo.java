@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import alkemy.challenge.disney.dto.PeliculaBasicoDto;
 import alkemy.challenge.disney.dto.PeliculaDto;
+import alkemy.challenge.disney.dto.PersonajeDto;
 import alkemy.challenge.disney.entidades.GeneroEntidad;
 import alkemy.challenge.disney.entidades.PeliculaEntidad;
 import alkemy.challenge.disney.repositorios.GeneroRepositorio;
@@ -18,6 +19,8 @@ public class PeliculaMapeo {
 
     @Autowired
     private GeneroRepositorio generoRepositorio;
+    @Autowired
+    private PersonajeMapeo personajeMapeo;
 
     public PeliculaEntidad dto2Entidad(PeliculaDto peliculaDto){
         PeliculaEntidad peliculaEntidad = new PeliculaEntidad();
@@ -27,6 +30,10 @@ public class PeliculaMapeo {
         peliculaEntidad.setFechaCreacion(peliculaDto.getFechaCreacion());
         peliculaEntidad.setCalificacion(peliculaDto.getCalificacion());
         peliculaEntidad.setGeneroId(generoAsociado);
+        // for (Long personajeId : peliculaDto.getPersonajes()) {
+            
+        // }
+        //peliculaEntidad.setPersonajes(peliculaDto.getPersonajes());
         return peliculaEntidad;
     }
 
@@ -40,7 +47,7 @@ public class PeliculaMapeo {
         return peliculaEntidad;
     }
 
-    public PeliculaDto entidad2Dto(PeliculaEntidad peliculaEntidad){
+    public PeliculaDto entidad2Dto(PeliculaEntidad peliculaEntidad, boolean cargarPersonajes){
         PeliculaDto peliculaDto = new PeliculaDto();
         peliculaDto.setPeliculaId(peliculaEntidad.getPeliculaId());
         peliculaDto.setTitulo(peliculaEntidad.getTitulo());
@@ -48,6 +55,10 @@ public class PeliculaMapeo {
         peliculaDto.setFechaCreacion(peliculaEntidad.getFechaCreacion());
         peliculaDto.setCalificacion(peliculaEntidad.getCalificacion());
         peliculaDto.setGeneroId(peliculaEntidad.getGeneroId().getGeneroId());
+        if(cargarPersonajes){
+            List<PersonajeDto> personajesDto = personajeMapeo.listaEntidades2listaDto(peliculaEntidad.getPersonajes());
+            peliculaDto.setPersonajes(personajesDto);
+        }
         return peliculaDto;
     }
 

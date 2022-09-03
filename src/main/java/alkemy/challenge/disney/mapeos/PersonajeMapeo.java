@@ -42,7 +42,7 @@ public class PersonajeMapeo {
         return personajeDto;
     }
 
-    public List<PersonajeBasicoDto>listaEntidades2listaDto(List<PersonajeEntidad> entidadesPersonajes){
+    public List<PersonajeBasicoDto>listaEntidades2listaDtoBasico(List<PersonajeEntidad> entidadesPersonajes){
         List<PersonajeBasicoDto> dtoPersonajes = new ArrayList<>();
         PersonajeBasicoDto personajeBasicoDto;
         for (PersonajeEntidad personajeEntidad : entidadesPersonajes) {
@@ -54,4 +54,19 @@ public class PersonajeMapeo {
         return dtoPersonajes;
     }
 
+    public List<PersonajeDto>listaEntidades2listaDto(List<PersonajeEntidad> entidadesPersonajes){
+        List<PersonajeDto> dtoPersonajes = new ArrayList<>();
+        PersonajeDto personajeDto;
+        for (PersonajeEntidad personajeEntidad : entidadesPersonajes) {
+            personajeDto = new PersonajeDto();
+            personajeDto.setPersonajeId(personajeEntidad.getPersonajeId());
+            personajeDto.setNombre(personajeEntidad.getNombre());
+            personajeDto.setImagen(personajeEntidad.getImagen());
+            personajeDto.setEdad(personajeEntidad.getEdad());
+            personajeDto.setPeso(personajeEntidad.getPeso());
+            personajeDto.setHistoria(personajeEntidad.getHistoria());
+            dtoPersonajes.add(personajeDto);
+        }
+        return dtoPersonajes;
+    }
 }

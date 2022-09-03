@@ -1,5 +1,8 @@
 package alkemy.challenge.disney.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +15,6 @@ public class PersonajeDto {
     private Integer edad;
     private Double peso;
     private String historia;
-    //agregar peliculas
+    private List<PeliculaDto> peliculas = new ArrayList<>();
+    
 }
