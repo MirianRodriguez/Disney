@@ -29,7 +29,7 @@ public class PersonajeServicio {
     @Transactional
     public PersonajeDto guardar(PersonajeDto personajeDto){
         PersonajeEntidad entidadPersonajeGuardado = personajeRepositorio.save(personajeMapeo.dto2Entidad(personajeDto));
-        PersonajeDto dtoPersonajeGuardado = personajeMapeo.entidad2Dto(entidadPersonajeGuardado);
+        PersonajeDto dtoPersonajeGuardado = personajeMapeo.entidad2Dto(entidadPersonajeGuardado, true);
         return dtoPersonajeGuardado;
     }
 
@@ -44,7 +44,7 @@ public class PersonajeServicio {
         PersonajeEntidad personajeActualizado = personajeMapeo.dto2Entidad(personajeDto, personajeGuardado);
         personajeActualizado = personajeRepositorio.save(personajeActualizado);
 
-        return personajeMapeo.entidad2Dto(personajeActualizado);
+        return personajeMapeo.entidad2Dto(personajeActualizado, true);
         
     }
 
@@ -54,7 +54,7 @@ public class PersonajeServicio {
         if (!personaje.isPresent()){
             throw new Exception("El id no es valido");
         }
-        PersonajeDto personajeDto = personajeMapeo.entidad2Dto(personaje.get());
+        PersonajeDto personajeDto = personajeMapeo.entidad2Dto(personaje.get(), true);
         return personajeDto;
     }
 

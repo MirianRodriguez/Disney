@@ -3,14 +3,19 @@ package alkemy.challenge.disney.mapeos;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import alkemy.challenge.disney.dto.PeliculaDto;
 import alkemy.challenge.disney.dto.PersonajeBasicoDto;
 import alkemy.challenge.disney.dto.PersonajeDto;
 import alkemy.challenge.disney.entidades.PersonajeEntidad;
 
 @Component
 public class PersonajeMapeo {
+
+    @Autowired
+    private PeliculaMapeo peliculaMapeo;
     
     public PersonajeEntidad dto2Entidad(PersonajeDto personajeDto){
         PersonajeEntidad personajeEntidad = new PersonajeEntidad();
@@ -31,7 +36,7 @@ public class PersonajeMapeo {
         return personajeEntidad;
     }
 
-    public PersonajeDto entidad2Dto(PersonajeEntidad personajeEntidad){
+    public PersonajeDto entidad2Dto(PersonajeEntidad personajeEntidad, boolean cargarPeliculas){
         PersonajeDto personajeDto = new PersonajeDto();
         personajeDto.setPersonajeId(personajeEntidad.getPersonajeId());
         personajeDto.setNombre(personajeEntidad.getNombre());
@@ -39,6 +44,10 @@ public class PersonajeMapeo {
         personajeDto.setEdad(personajeEntidad.getEdad());
         personajeDto.setPeso(personajeEntidad.getPeso());
         personajeDto.setHistoria(personajeEntidad.getHistoria());
+        if(cargarPeliculas){
+            List<PeliculaDto> peliculasDto = peliculaMapeo.listaEntidades2listaDto(personajeEntidad.getPeliculas());
+            personajeDto.setPeliculas(peliculasDto);
+        }
         return personajeDto;
     }
 
