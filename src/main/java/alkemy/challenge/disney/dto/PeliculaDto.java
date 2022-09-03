@@ -1,6 +1,8 @@
 package alkemy.challenge.disney.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +16,6 @@ public class PeliculaDto {
     private LocalDate fechaCreacion;
     private Integer calificacion;
     private Long generoId;
-    //private List<PersonajeEntidad> personajes = new ArrayList<>();
+    private List<PersonajeDto> personajes = new ArrayList<>();
     
 }
