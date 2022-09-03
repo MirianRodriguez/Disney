@@ -1,5 +1,7 @@
 package alkemy.challenge.disney.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import alkemy.challenge.disney.dto.PeliculaBasicoDto;
 import alkemy.challenge.disney.dto.PeliculaDto;
 import alkemy.challenge.disney.servicios.PeliculaServicio;
 
@@ -45,6 +49,16 @@ public class PeliculaControlador {
     public ResponseEntity<Void> eliminarPelicula(@PathVariable Long peliculaId) throws Exception{
         peliculaServicio.eliminarPorId(peliculaId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PeliculaBasicoDto>> buscarPorFiltros(
+        @RequestParam(required = false) String titulo,
+        @RequestParam(required = false) Long generoId,
+        @RequestParam(required = false, defaultValue = "ASC") String orden
+    ){
+        List<PeliculaBasicoDto> peliculas = peliculaServicio.buscarPorFiltros(titulo, generoId, orden);
+        return ResponseEntity.ok(peliculas);
     }
 
 }
