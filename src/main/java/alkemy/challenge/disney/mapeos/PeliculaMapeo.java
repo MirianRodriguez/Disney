@@ -62,7 +62,7 @@ public class PeliculaMapeo {
         return peliculaDto;
     }
 
-    public List<PeliculaBasicoDto> listaEntidades2listaDto(List<PeliculaEntidad> entidadesPeliculas) {
+    public List<PeliculaBasicoDto> listaEntidades2listaDtoBasico(List<PeliculaEntidad> entidadesPeliculas) {
         List<PeliculaBasicoDto> dtoPeliculas = new ArrayList<>();
         PeliculaBasicoDto peliculaBasicoDto;
         for (PeliculaEntidad peliculaEntidad : entidadesPeliculas) {
@@ -71,6 +71,22 @@ public class PeliculaMapeo {
             peliculaBasicoDto.setImagen(peliculaEntidad.getImagen());
             peliculaBasicoDto.setFechaCreacion(peliculaEntidad.getFechaCreacion());
             dtoPeliculas.add(peliculaBasicoDto);
+        }
+        return dtoPeliculas;
+    }
+
+    public List<PeliculaDto> listaEntidades2listaDto(List<PeliculaEntidad> entidadesPeliculas) {
+        List<PeliculaDto> dtoPeliculas = new ArrayList<>();
+        PeliculaDto peliculaDto;
+        for (PeliculaEntidad peliculaEntidad : entidadesPeliculas) {
+            peliculaDto = new PeliculaDto();
+            peliculaDto.setPeliculaId(peliculaEntidad.getPeliculaId());
+            peliculaDto.setTitulo(peliculaEntidad.getTitulo());
+            peliculaDto.setImagen(peliculaEntidad.getImagen());
+            peliculaDto.setFechaCreacion(peliculaEntidad.getFechaCreacion());
+            peliculaDto.setCalificacion(peliculaEntidad.getCalificacion());
+            peliculaDto.setGeneroId(peliculaEntidad.getGeneroId().getGeneroId());
+            dtoPeliculas.add(peliculaDto);
         }
         return dtoPeliculas;
     }

@@ -69,7 +69,7 @@ public class PeliculaServicio {
     public List<PeliculaBasicoDto> buscarPorFiltros(String titulo, Long generoId, String orden) {
         FiltroPeliculaDto filtroPeliculaDto = new FiltroPeliculaDto(titulo, generoId, orden);
         List<PeliculaEntidad> entidadesPeliculas = peliculaRepositorio.findAll(especificacion.buscarPorFiltros(filtroPeliculaDto));
-        List<PeliculaBasicoDto> dtoPeliculas = peliculaMapeo.listaEntidades2listaDto(entidadesPeliculas);
+        List<PeliculaBasicoDto> dtoPeliculas = peliculaMapeo.listaEntidades2listaDtoBasico(entidadesPeliculas);
         return dtoPeliculas;
     }
 }
