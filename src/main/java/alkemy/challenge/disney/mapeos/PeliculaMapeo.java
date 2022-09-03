@@ -1,8 +1,12 @@
 package alkemy.challenge.disney.mapeos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import alkemy.challenge.disney.dto.PeliculaBasicoDto;
 import alkemy.challenge.disney.dto.PeliculaDto;
 import alkemy.challenge.disney.entidades.GeneroEntidad;
 import alkemy.challenge.disney.entidades.PeliculaEntidad;
@@ -45,6 +49,19 @@ public class PeliculaMapeo {
         peliculaDto.setCalificacion(peliculaEntidad.getCalificacion());
         peliculaDto.setGeneroId(peliculaEntidad.getGeneroId().getGeneroId());
         return peliculaDto;
+    }
+
+    public List<PeliculaBasicoDto> listaEntidades2listaDto(List<PeliculaEntidad> entidadesPeliculas) {
+        List<PeliculaBasicoDto> dtoPeliculas = new ArrayList<>();
+        PeliculaBasicoDto peliculaBasicoDto;
+        for (PeliculaEntidad peliculaEntidad : entidadesPeliculas) {
+            peliculaBasicoDto = new PeliculaBasicoDto();
+            peliculaBasicoDto.setTitulo(peliculaEntidad.getTitulo());
+            peliculaBasicoDto.setImagen(peliculaEntidad.getImagen());
+            peliculaBasicoDto.setFechaCreacion(peliculaEntidad.getFechaCreacion());
+            dtoPeliculas.add(peliculaBasicoDto);
+        }
+        return dtoPeliculas;
     }
 
 }
