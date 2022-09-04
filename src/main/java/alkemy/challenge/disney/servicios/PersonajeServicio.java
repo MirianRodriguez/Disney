@@ -37,7 +37,7 @@ public class PersonajeServicio {
     public PersonajeDto actualizar(Long personajeId, PersonajeDto personajeDto) throws Exception{
         Optional<PersonajeEntidad> personaje = personajeRepositorio.findById(personajeId);
         if (!personaje.isPresent()){
-            throw new Exception("El id no es valido");
+            throw new Exception("El id de personaje no es valido");
         }
 
         PersonajeEntidad personajeGuardado = personaje.get();
@@ -52,7 +52,7 @@ public class PersonajeServicio {
     public PersonajeDto buscarPorId(Long personajeId) throws Exception{
         Optional<PersonajeEntidad> personaje = personajeRepositorio.findById(personajeId);
         if (!personaje.isPresent()){
-            throw new Exception("El id no es valido");
+            throw new Exception("El id de personaje no es valido");
         }
         PersonajeDto personajeDto = personajeMapeo.entidad2Dto(personaje.get(), true);
         return personajeDto;
@@ -62,7 +62,7 @@ public class PersonajeServicio {
     public void eliminarPorId(Long personajeId) throws Exception{
         Optional<PersonajeEntidad> personaje = personajeRepositorio.findById(personajeId);
         if (!personaje.isPresent()){
-            throw new Exception("El id no es valido");
+            throw new Exception("El id de personaje no es valido");
         }
         personajeRepositorio.delete(personaje.get());
     }

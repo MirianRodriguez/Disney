@@ -26,7 +26,7 @@ public class PeliculaControlador {
     private PeliculaServicio peliculaServicio;
 
     @PostMapping
-    public ResponseEntity<PeliculaDto> crear(@RequestBody PeliculaDto peliculaDto){
+    public ResponseEntity<PeliculaDto> crear(@RequestBody PeliculaDto peliculaDto) throws Exception{
         PeliculaDto peliculaGuardada = peliculaServicio.guardar(peliculaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(peliculaGuardada);
     }

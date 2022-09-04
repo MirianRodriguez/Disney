@@ -19,6 +19,7 @@ public class PersonajeMapeo {
     
     public PersonajeEntidad dto2Entidad(PersonajeDto personajeDto){
         PersonajeEntidad personajeEntidad = new PersonajeEntidad();
+        personajeEntidad.setPersonajeId(personajeDto.getPersonajeId());
         personajeEntidad.setNombre(personajeDto.getNombre());
         personajeEntidad.setImagen(personajeDto.getImagen());
         personajeEntidad.setEdad(personajeDto.getEdad());

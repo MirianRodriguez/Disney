@@ -25,7 +25,7 @@ public class PeliculaServicio {
     private PeliculaEspecificacion especificacion;
 
     @Transactional
-    public PeliculaDto guardar(PeliculaDto peliculaDto){
+    public PeliculaDto guardar(PeliculaDto peliculaDto) throws Exception{
         PeliculaEntidad entidadPeliculaGuardada = peliculaRepositorio.save(peliculaMapeo.dto2Entidad(peliculaDto));
         PeliculaDto dtoPeliculaGuardada = peliculaMapeo.entidad2Dto(entidadPeliculaGuardada, true);
         return dtoPeliculaGuardada;
@@ -35,7 +35,7 @@ public class PeliculaServicio {
     public PeliculaDto actualizar(Long peliculaId, PeliculaDto peliculaDto) throws Exception{
         Optional<PeliculaEntidad> pelicula = peliculaRepositorio.findById(peliculaId);
         if (!pelicula.isPresent()){
-            throw new Exception("El id no es valido");
+            throw new Exception("El id de pelicula no es valido");
         }
 
         PeliculaEntidad peliculaGuardada = pelicula.get();
@@ -50,7 +50,7 @@ public class PeliculaServicio {
     public PeliculaDto buscarPorId(Long peliculaId) throws Exception{
         Optional<PeliculaEntidad> pelicula = peliculaRepositorio.findById(peliculaId);
         if (!pelicula.isPresent()){
-            throw new Exception("El id no es valido");
+            throw new Exception("El id de pelicula no es valido");
         }
         PeliculaDto peliculaDto = peliculaMapeo.entidad2Dto(pelicula.get(), true);
         return peliculaDto;
@@ -60,7 +60,7 @@ public class PeliculaServicio {
     public void eliminarPorId(Long peliculaId) throws Exception{
         Optional<PeliculaEntidad> pelicula = peliculaRepositorio.findById(peliculaId);
         if (!pelicula.isPresent()){
-            throw new Exception("El id no es valido");
+            throw new Exception("El id de pelicula no es valido");
         }
         peliculaRepositorio.delete(pelicula.get());
     }
