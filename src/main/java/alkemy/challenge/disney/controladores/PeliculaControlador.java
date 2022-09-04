@@ -61,4 +61,10 @@ public class PeliculaControlador {
         return ResponseEntity.ok(peliculas);
     }
 
+    @PostMapping("/{peliculaId}/personajes/{personajeId}")
+    public ResponseEntity<PeliculaDto> agregarPersonaje(@PathVariable Long peliculaId, @PathVariable Long personajeId) throws Exception{
+        PeliculaDto peliculaDto = peliculaServicio.agregarPersonaje(peliculaId, personajeId);
+        return ResponseEntity.ok(peliculaDto);
+    }
+
 }
