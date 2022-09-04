@@ -67,4 +67,10 @@ public class PeliculaControlador {
         return ResponseEntity.ok(peliculaDto);
     }
 
+    @DeleteMapping("/{peliculaId}/personajes/{personajeId}")
+    public ResponseEntity<PeliculaDto> removerPersonaje(@PathVariable Long peliculaId, @PathVariable Long personajeId) throws Exception{
+        PeliculaDto peliculaDto = peliculaServicio.removerPersonaje(peliculaId, personajeId);
+        return ResponseEntity.ok(peliculaDto);
+    }
+
 }
