@@ -11,14 +11,18 @@ import alkemy.challenge.disney.dto.FiltroPeliculaDto;
 import alkemy.challenge.disney.dto.PeliculaBasicoDto;
 import alkemy.challenge.disney.dto.PeliculaDto;
 import alkemy.challenge.disney.entidades.PeliculaEntidad;
+import alkemy.challenge.disney.entidades.PersonajeEntidad;
 import alkemy.challenge.disney.mapeos.PeliculaMapeo;
 import alkemy.challenge.disney.repositorios.PeliculaRepositorio;
+import alkemy.challenge.disney.repositorios.PersonajeRepositorio;
 import alkemy.challenge.disney.repositorios.especificaciones.PeliculaEspecificacion;
 
 @Service
 public class PeliculaServicio {
     @Autowired
     private PeliculaRepositorio peliculaRepositorio;
+    @Autowired
+    private PersonajeRepositorio personajeRepositorio;
     @Autowired
     private PeliculaMapeo peliculaMapeo;
     @Autowired
@@ -71,5 +75,22 @@ public class PeliculaServicio {
         List<PeliculaEntidad> entidadesPeliculas = peliculaRepositorio.findAll(especificacion.buscarPorFiltros(filtroPeliculaDto));
         List<PeliculaBasicoDto> dtoPeliculas = peliculaMapeo.listaEntidades2listaDtoBasico(entidadesPeliculas);
         return dtoPeliculas;
+    }
+
+    public PeliculaDto agregarPersonaje(Long peliculaId, Long personajeId) throws Exception{
+        Optional<PeliculaEntidad> peliculaBuscada = peliculaRepositorio.findById(peliculaId);
+        if(!peliculaBuscada.isPresent()){
+            throw new Exception("El id de la pelicula no es valido");
+        }
+        Optional<PersonajeEntidad> personajeBuscado = personajeRepositorio.findById(personajeId);
+        if(!personajeBuscado.isPresent()){
+            throw new Exception("El id del personaje no es valido");
+        }
+        PeliculaEntidad pelicula = peliculaBuscada.get();
+        List<PersonajeEntidad> personajesPelicula = pelicula.getPersonajes();
+        personajesPelicula.add(personajeBuscado.get());
+        pelicula.setPersonajes(personajesPelicula);
+        pelicula = peliculaRepositorio.save(pelicula);
+        return peliculaMapeo.entidad2Dto(pelicula, true);
     }
 }
