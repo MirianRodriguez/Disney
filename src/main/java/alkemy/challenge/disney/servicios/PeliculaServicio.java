@@ -77,6 +77,7 @@ public class PeliculaServicio {
         return dtoPeliculas;
     }
 
+    @Transactional
     public PeliculaDto agregarPersonaje(Long peliculaId, Long personajeId) throws Exception{
         Optional<PeliculaEntidad> peliculaBuscada = peliculaRepositorio.findById(peliculaId);
         if(!peliculaBuscada.isPresent()){
@@ -89,6 +90,26 @@ public class PeliculaServicio {
         PeliculaEntidad pelicula = peliculaBuscada.get();
         List<PersonajeEntidad> personajesPelicula = pelicula.getPersonajes();
         personajesPelicula.add(personajeBuscado.get());
+        pelicula.setPersonajes(personajesPelicula);
+        pelicula = peliculaRepositorio.save(pelicula);
+        return peliculaMapeo.entidad2Dto(pelicula, true);
+    }
+
+    @Transactional
+    public PeliculaDto removerPersonaje(Long peliculaId, Long personajeId) throws Exception{
+        Optional<PeliculaEntidad> peliculaBuscada = peliculaRepositorio.findById(peliculaId);
+        if(!peliculaBuscada.isPresent()){
+            throw new Exception("El id de la pelicula no es valido");
+        }
+        Optional<PersonajeEntidad> personajeBuscado = personajeRepositorio.findById(personajeId);
+        if(!personajeBuscado.isPresent()){
+            throw new Exception("El id del personaje no es valido");
+        }
+        PeliculaEntidad pelicula = peliculaBuscada.get();
+        List<PersonajeEntidad> personajesPelicula = pelicula.getPersonajes();
+        if(personajesPelicula.contains(personajeBuscado.get())){
+            personajesPelicula.remove(personajeBuscado.get());
+        }
         pelicula.setPersonajes(personajesPelicula);
         pelicula = peliculaRepositorio.save(pelicula);
         return peliculaMapeo.entidad2Dto(pelicula, true);
