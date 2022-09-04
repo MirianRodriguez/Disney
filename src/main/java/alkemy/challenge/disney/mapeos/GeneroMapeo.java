@@ -10,6 +10,7 @@ public class GeneroMapeo {
 
     public GeneroEntidad dto2Entidad(GeneroDto generoDto){
         GeneroEntidad generoEntidad = new GeneroEntidad();
+        generoEntidad.setGeneroId(generoDto.getGeneroId());
         generoEntidad.setNombre(generoDto.getNombre());
         generoEntidad.setImagen(generoDto.getImagen());
         return generoEntidad;

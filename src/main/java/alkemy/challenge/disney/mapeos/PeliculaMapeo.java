@@ -6,39 +6,50 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import alkemy.challenge.disney.dto.GeneroDto;
 import alkemy.challenge.disney.dto.PeliculaBasicoDto;
 import alkemy.challenge.disney.dto.PeliculaDto;
 import alkemy.challenge.disney.dto.PersonajeDto;
 import alkemy.challenge.disney.entidades.GeneroEntidad;
 import alkemy.challenge.disney.entidades.PeliculaEntidad;
-import alkemy.challenge.disney.repositorios.GeneroRepositorio;
+import alkemy.challenge.disney.entidades.PersonajeEntidad;
+import alkemy.challenge.disney.servicios.GeneroServicio;
+import alkemy.challenge.disney.servicios.PersonajeServicio;
 
 
 @Component
 public class PeliculaMapeo {
 
     @Autowired
-    private GeneroRepositorio generoRepositorio;
+    private GeneroServicio generoServicio;
     @Autowired
     private PersonajeMapeo personajeMapeo;
+    @Autowired
+    private PersonajeServicio personajeServicio;
+    @Autowired
+    private GeneroMapeo generoMapeo;
 
-    public PeliculaEntidad dto2Entidad(PeliculaDto peliculaDto){
+    public PeliculaEntidad dto2Entidad(PeliculaDto peliculaDto) throws Exception{
         PeliculaEntidad peliculaEntidad = new PeliculaEntidad();
-        GeneroEntidad generoAsociado = generoRepositorio.findById(peliculaDto.getGeneroId()).get();
+        GeneroDto genero = generoServicio.buscarPorId(peliculaDto.getGeneroId());
+        GeneroEntidad generoAsociado = generoMapeo.dto2Entidad(genero);
         peliculaEntidad.setTitulo(peliculaDto.getTitulo());
         peliculaEntidad.setImagen(peliculaDto.getImagen());
         peliculaEntidad.setFechaCreacion(peliculaDto.getFechaCreacion());
         peliculaEntidad.setCalificacion(peliculaDto.getCalificacion());
         peliculaEntidad.setGeneroId(generoAsociado);
-        // for (Long personajeId : peliculaDto.getPersonajes()) {
-            
-        // }
-        //peliculaEntidad.setPersonajes(peliculaDto.getPersonajes());
+        List<PersonajeEntidad> personajesEntidad = new ArrayList<>();
+        for (PersonajeDto personajeDto : peliculaDto.getPersonajes()) {
+            PersonajeDto personajeDtoExistente = personajeServicio.buscarPorId(personajeDto.getPersonajeId());
+            personajesEntidad.add(personajeMapeo.dto2Entidad(personajeDtoExistente));
+        }
+        peliculaEntidad.setPersonajes(personajesEntidad);
         return peliculaEntidad;
     }
 
-    public PeliculaEntidad dto2Entidad(PeliculaDto peliculaDto, PeliculaEntidad peliculaEntidad){
-        GeneroEntidad generoAsociado = generoRepositorio.findById(peliculaDto.getGeneroId()).get();
+    public PeliculaEntidad dto2Entidad(PeliculaDto peliculaDto, PeliculaEntidad peliculaEntidad) throws Exception{
+        GeneroDto genero = generoServicio.buscarPorId(peliculaDto.getGeneroId());
+        GeneroEntidad generoAsociado = generoMapeo.dto2Entidad(genero);
         peliculaEntidad.setTitulo(peliculaDto.getTitulo());
         peliculaEntidad.setImagen(peliculaDto.getImagen());
         peliculaEntidad.setFechaCreacion(peliculaDto.getFechaCreacion());
